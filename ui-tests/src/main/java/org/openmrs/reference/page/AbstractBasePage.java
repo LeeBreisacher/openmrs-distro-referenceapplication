@@ -42,6 +42,10 @@ public abstract class AbstractBasePage {
         setText(getElement(By.id(textFieldId)), text);
     }
 
+    public void setTextToFieldNamed(String textFieldName, String text) {
+    	setText(getElement(By.name(textFieldName)), text);
+    }
+    
     public void setTextToFieldInsideSpan(String spanId, String text) {
         setText(findTextFieldInsideSpan(spanId), text);
     }
@@ -76,4 +80,13 @@ public abstract class AbstractBasePage {
 	 * @return The title of the page.
 	 */
 	public abstract String expectedTitle();
+	
+	public WebElement getOptionElement(String selectName, int optionValue) {
+	    return getOptionElement(selectName, ""+optionValue);
+    }
+
+	public WebElement getOptionElement(String selectName, String optionValue) {
+	    return getElement(By.xpath("//*[@name=\"" + selectName + "\"]/option[@value=\"" + optionValue + "\"]"));
+    }
+
 }

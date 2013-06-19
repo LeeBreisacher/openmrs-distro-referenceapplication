@@ -10,6 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openmrs.reference.page.AbstractBasePage;
 import org.openmrs.reference.page.GenericPage;
+import org.openmrs.reference.page.HeaderPage;
+import org.openmrs.reference.page.LoginPage;
 import org.openmrs.reference.page.TestProperties;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -26,6 +28,7 @@ public class TestBase {
 
     @AfterClass
     public static void stopWebDriver() {
+    	try {Thread.sleep(2000);} catch (InterruptedException e) {}
         driver.quit();
     }
     private static void setupChromeDriver() {
@@ -60,5 +63,18 @@ public class TestBase {
 	public void assertPage(AbstractBasePage expected) {
 	    assertEquals(expected.expectedTitle(), currentPage().title());
     }
-
+	
+	public boolean isPage(AbstractBasePage page) {
+		return page.expectedTitle().equals(currentPage().title());
+	}
+	
+	void goToLoginPageIfNeeded() {
+		LoginPage loginPage = new LoginPage(driver);
+		if (isPage(loginPage)) {
+			return;
+		}
+        new HeaderPage(driver).logOut();
+        assertPage(loginPage);
+	}
+	
 }
