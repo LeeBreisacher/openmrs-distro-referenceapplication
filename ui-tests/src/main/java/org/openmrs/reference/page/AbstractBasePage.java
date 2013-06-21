@@ -1,5 +1,8 @@
 package org.openmrs.reference.page;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +13,7 @@ import org.openqa.selenium.interactions.Actions;
  * A superclass for "real" pages. Has lots of handy methods for accessing
  * elements, clicking, filling fields. etc.
  */
-public abstract class AbstractBasePage {
+public abstract class AbstractBasePage implements Page {
     protected TestProperties properties = new TestProperties();
     protected WebDriver driver;
     private String serverURL;
@@ -20,28 +23,34 @@ public abstract class AbstractBasePage {
         serverURL = properties.getWebAppUrl();
     }
 
+    @Override
     public void gotoPage(String address) {
         driver.get(serverURL + address);
     }
     
     // Convenience method. TODO Should this be named findElement instead?
+    @Override
     public WebElement getElement(By by) {
     	return driver.findElement(by);
     }
 
     // Convenience method. TODO Should this be named findElementById instead?
+    @Override
     public WebElement getElementById(String id) {
     	return getElement(By.id(id));
     }
     
-    public String getText(By by){
+    @Override
+    public String getText(By by) {
         return getElement(by).getText();
     }
 
+    @Override
     public void setTextToField(String textFieldId, String text) {
         setText(getElement(By.id(textFieldId)), text);
     }
 
+    @Override
     public void setTextToFieldInsideSpan(String spanId, String text) {
         setText(findTextFieldInsideSpan(spanId), text);
     }
@@ -52,13 +61,15 @@ public abstract class AbstractBasePage {
         element.sendKeys(Keys.RETURN);
     }
 
-    public void clickOn(By elementId) {
-        getElement(elementId).click();
+    @Override
+    public void clickOn(By by) {
+        getElement(by).click();
     }
 
-    public void hoverOn(By elementId) {
+    @Override
+    public void hoverOn(By by) {
         Actions builder = new Actions(driver);
-        Actions hover = builder.moveToElement(driver.findElement(elementId));
+        Actions hover = builder.moveToElement(driver.findElement(by));
         hover.perform();
     }
 
@@ -66,14 +77,21 @@ public abstract class AbstractBasePage {
         return getElementById(spanId).findElement(By.tagName("input"));
     }
 
-	public String title() {
+	@Override
+    public String title() {
 	    return getText(By.tagName("title"));
     }
 	
-	/**
-	 * Real pages supply their title.
-	 * 
-	 * @return The title of the page.
-	 */
-	public abstract String expectedTitle();
+	@Override
+	public String urlPath() {
+	    try {
+	        return new URL(driver.getCurrentUrl()).getPath();
+        }
+        catch (MalformedURLException e) {
+	        return null;
+        }
+    }
+	
+	@Override
+    public abstract String expectedUrlPath();
 }

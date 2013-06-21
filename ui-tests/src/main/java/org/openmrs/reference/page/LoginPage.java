@@ -19,7 +19,7 @@ public class LoginPage extends AbstractBasePage {
     }
     
     @Override
-    public String expectedTitle() {
-    	return "Login";
+    public String expectedUrlPath() {
+    	return "/openmrs/login.htm";
     }
 }

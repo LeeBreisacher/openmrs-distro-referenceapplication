@@ -14,7 +14,7 @@ public class HeaderPage extends AbstractBasePage {
     }
 
 	@Override
-    public String expectedTitle() {
+    public String expectedUrlPath() {
 	    return null;
     }
 }

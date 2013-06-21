@@ -28,7 +28,7 @@ public class LoginTest extends TestBase {
         assertPage(homePage);
         assertNotNull(homePage.getText(By.id("apps")));
         assertNotNull(homePage.getElementById("registrationapp-basicRegisterPatient-homepageLink-registrationapp-basicRegisterPatient-homepageLink-extension"));	// nasty
-        //TODO: verify the apps on the screen
+        //TODO: verify more apps on the page
         headerPage.logOut();
         assertPage(loginPage);
     }

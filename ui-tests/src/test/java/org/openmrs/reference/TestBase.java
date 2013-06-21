@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.openmrs.reference.page.AbstractBasePage;
 import org.openmrs.reference.page.GenericPage;
+import org.openmrs.reference.page.Page;
 import org.openmrs.reference.page.TestProperties;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -44,7 +44,7 @@ public class TestBase {
 
     /**
      * Return a Page that represents the current page, so that all the convenient
-     * methods in AbstractBasePage can be used.
+     * methods in Page can be used.
      * 
      * @return a Page
      */
@@ -57,8 +57,8 @@ public class TestBase {
      * 
      * @param expected page
      */
-	public void assertPage(AbstractBasePage expected) {
-	    assertEquals(expected.expectedTitle(), currentPage().title());
+	public void assertPage(Page expected) {
+	    assertEquals(expected.expectedUrlPath(), currentPage().urlPath());
     }
 
 }

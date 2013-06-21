@@ -12,8 +12,8 @@ public class GenericPage extends AbstractBasePage {
     }
 
 	@Override
-    public String expectedTitle() {
-	    return null;	// TODO or return ""? or throw RuntimeException?
+    public String expectedUrlPath() {
+	    return null;
     }
-	
+
 }

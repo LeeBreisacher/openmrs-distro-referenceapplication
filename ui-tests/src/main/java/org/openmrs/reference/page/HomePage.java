@@ -10,8 +10,8 @@ public class HomePage extends AbstractBasePage {
     }
 	
     @Override
-    public String expectedTitle() {
-    	return "Home";
+    public String expectedUrlPath() {
+    	return "/openmrs/referenceapplication/home.page";
     }
 
 }
